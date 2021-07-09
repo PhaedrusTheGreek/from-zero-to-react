@@ -1,0 +1,8 @@
+.MyQuestionClass {
+  font-size: 25px;
+  width: 75%;
+  background-color: grey;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}

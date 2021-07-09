@@ -1,22 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Answer from "./Answer";
+import Question from "./Question";
+import React, { useState } from "react";
+import trainingData from "./TrainingData.json";
 
 function App() {
+  const [message, setMessage] = useState("Welcome, human!");
+
+  function answerQuestion(event) {
+    const asked = event.target.value;
+    const askedWords = asked
+      .toLowerCase()
+      .replace(/[^a-zA-Z ]/g, "")
+      .split(/ +/);
+
+    for (const [answer, keywords] of Object.entries(trainingData)) {
+      if (asked.length > 2) {
+        for (const askedWord of askedWords) {
+          if (keywords.includes(askedWord)) {
+            setMessage(answer);
+          }
+        }
+      } else {
+        setMessage("...");
+      }
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
+        Ask the Answer Bot
+        <Question handleQuestion={answerQuestion}></Question>
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Answer message={message}></Answer>
       </header>
     </div>
   );
